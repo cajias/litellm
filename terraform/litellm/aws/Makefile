@@ -52,7 +52,7 @@ destroy: init ## Tear the whole stack down (prompts before destroying)
 url: guard-tfvars ## Print the ALB URL
 	@$(TF) output -raw alb_url && echo
 
-key: guard-tfvars ## Print the LITELLM_MASTER_KEY (auto-generated if none was passed)
+key: guard-tfvars ## Print the existing master key from Secrets Manager (read-only, same value every run)
 	@aws secretsmanager get-secret-value \
 		--secret-id $$($(TF) output -raw master_key_secret_arn) \
 		--query SecretString --output text
